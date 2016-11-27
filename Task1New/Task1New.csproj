@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdditionVisitor.cs" />
     <Compile Include="DiagonalMatrix.cs" />
     <Compile Include="IVisitor.cs" />
     <Compile Include="SimmetricalMatrix.cs" />

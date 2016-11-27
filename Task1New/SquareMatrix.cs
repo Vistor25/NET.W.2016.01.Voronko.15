@@ -44,24 +44,7 @@ namespace Task1New
             ElementChanged?.Invoke(arg1, arg2, arg3, arg4);
         }
 
-        public SquareMatrix<T> Add(SquareMatrix<T> other)
-        {
-            if (Size != other.Size)
-            {
-                throw new ArgumentException("You can't add matrices of differnt dimensions.");
-            }
-
-            var source = new T[Size, Size];
-            for (var i = 0; i < Size; i++)
-            {
-                for (var j = 0; j < Size; j++)
-                {
-                    source[i, j] = (dynamic) this[i, j]+(other[i, j]);
-                }
-
-            }
-            return new SquareMatrix<T>(source);
-        }
+       
 
         public void Accept(IVisitor<T> visitor, SquareMatrix<T> other)
         {
