@@ -11,7 +11,7 @@ namespace Task2
     public class BinarySearchTree<T>:IEnumerable<T>
     {
         private Node<T> root;
-        private IComparer<T> comparer;
+        public IComparer<T> comparer;
 
         class Node<T>
         {
@@ -24,38 +24,73 @@ namespace Task2
             }
 
         }
-
+        /// <summary>
+        /// Creates new BinarySearchTree
+        /// </summary>
+        /// <param name="elements">Some ienumerable elements</param>
+        /// <param name="comparer">Comparer that we want to use</param>
+        public BinarySearchTree(IEnumerable<T> elements, IComparer<T> comparer)
+        {
+            if(ReferenceEquals(elements,null)) throw new ArgumentException();
+            if (ReferenceEquals(comparer, null))
+            {
+                this.comparer = Comparer<T>.Default;
+            }
+            else
+            {
+                this.comparer = comparer;
+            }
+            foreach (var element in elements)
+            {
+                Add(element);
+            }
+        }
+        /// <summary>
+        /// Adds some element into the BinarySearchTree.
+        /// </summary>
+        /// <param name="element">element that we add.</param>
         public void Add(T element)
         {
+            if (ReferenceEquals(root, null))
+            {
+                root = new Node<T>(element);
+                return;
+            }
             Node<T> current = root;
+            Node<T> leaf = null;
             while (!ReferenceEquals(current, null))
             {
-                if (comparer.Compare(current.Value, element) > 0)
-                {
-                    current = current.rightNode;}
-                if(comparer.Compare(current.Value, element) == 0) { throw new ArgumentException("There is already such element!");}
-                if (comparer.Compare(current.Value, element) < 0)
-                {
+                leaf = current;
+                var cmpr = (comparer.Compare(current.Value, element) < 0)?
+               
+                    current = current.rightNode:
+               
                     current = current.leftNode;
-                }
             }
-            current = new Node<T>(element); 
+            var cmp = (comparer.Compare(leaf.Value, element) < 0)?
+            
+                leaf.rightNode = new Node<T>(element):
+            
+                leaf.leftNode = new Node<T>(element);
+            
+            
         }
-
+        /// <summary>
+        /// Show us exists such element into BinarySearchTree or not.
+        /// </summary>
+        /// <param name="element">Element that we check existance</param>
+        /// <returns>True or false</returns>
         public bool Contains(T element)
         {
             Node<T> current = root;
             while (!ReferenceEquals(current, null))
             {
-                if (comparer.Compare(current.Value, element) > 0)
-                {
-                    current = current.rightNode;
-                }
-                if (comparer.Compare(current.Value, element) == 0) {return true; }
-                if (comparer.Compare(current.Value, element) < 0)
-                {
-                    current = current.leftNode;
-                }
+                if (comparer.Compare(current.Value, element) == 0) { return true; }
+                var cmp = (comparer.Compare(current.Value, element) > 0)?
+                
+                current = current.leftNode:
+                current = current.rightNode;
+                
             }
             return false;
         }
@@ -102,6 +137,21 @@ namespace Task2
             }
             yield return node.Value;
         }
+        /// <summary>
+        /// Represents the BinarySearchTree in Preorder mode.
+        /// </summary>
+        /// <returns>The representation of BinarySearchTree in Preoder mode</returns>
+        public IEnumerable<T> PreOrder() => PreOrder(root);
+        /// <summary>
+        /// Represents the BinarySearchTree in InOrder mode.
+        /// </summary>
+        /// <returns>The representation of BinarySearchTree in InOrder mode</returns>
+        public IEnumerable<T> InOrder() => InOrder(root);
+        /// <summary>
+        ///  Represents the BinarySearchTree in PostOrder mode.
+        /// </summary>
+        /// <returns>The representation of BinarySearchTree in PostOrder mode</returns>
+        public IEnumerable<T> PostOrder() => PostOrder(root);
         public IEnumerator<T> GetEnumerator()
         {
             return PreOrder(root).GetEnumerator();
