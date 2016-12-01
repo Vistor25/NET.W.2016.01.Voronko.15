@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Task1New
 {
-    public class SquareMatrix<T> where T: struct
+    public class SquareMatrix<T>:AbstarctMatrix<T> where T: struct
     {
         private readonly T[,] _data;
 
@@ -49,6 +49,16 @@ namespace Task1New
         public void Accept(IVisitor<T> visitor, SquareMatrix<T> other)
         {
             visitor.Visit((dynamic) this, other);
+        }
+
+        protected override T GetElement(int i, int j)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void SetElement(T element, int i, int j)
+        {
+            throw new NotImplementedException();
         }
     }
 }
