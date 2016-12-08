@@ -4,7 +4,7 @@ namespace Task1New
 {
     public abstract class AbstarctMatrix<T>
     {
-        private int dimension;
+        private int Size;
 
         protected abstract T GetElement(int i, int j);
         protected abstract void SetElement(T element, int i, int j);
@@ -29,8 +29,8 @@ namespace Task1New
         }
         private void ValidateIndexes(int i, int j)
         {
-            if (i < 0 || i >= dimension) throw new ArgumentException("Wrong index");
-            if (j < 0 || j >= dimension) throw new ArgumentException("Wrong index");
+            if (i < 0 || i >= Size) throw new ArgumentException("Wrong index");
+            if (j < 0 || j >= Size) throw new ArgumentException("Wrong index");
 
         }
         protected virtual void OnElementChanged(T arg1, T arg2, int arg3,

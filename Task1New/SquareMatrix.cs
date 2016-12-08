@@ -37,13 +37,13 @@ namespace Task1New
         }
 
         protected override T GetElement(int i, int j)
-        {            
-            return _data[i*Size]
+        {
+            return _data[i * Size + j];
         }
 
         protected override void SetElement(T element, int i, int j)
         {
-            throw new NotImplementedException();
+            _data[i* Size +j]= element;
         }
     }
 }
